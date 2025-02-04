@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration and login forms</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            background-color: rgb(214, 253, 255);
+        }
+
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 300px;
+            display: none;
+        }
+
+        td {
+            padding: 10px;
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px 15px;
+            background-color: rgb(116, 255, 116);
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <button onclick="showform('login')">Login</button>
+        <button onclick="showform('register')">Register</button>
+    </div>
+    <table id="formTable">
+        <tbody>
+            <tr id="loginRow" style="display: none;">
+                <td>
+                    <h2>Login</h2>
+                    <form onsubmit="return validateLogin()">
+                        Username:<input type="text" id="loginUsername" placeholder="Username" required>
+                        Password:<input type="password" id="loginPassword" placeholder="Password" required>
+                        <button type="submit">Submit</button>
+                    </form>
+                </td>
+            </tr>
+            <tr id="registerRow" style="display: none;">
+                <td>
+                    <h2>Register</h2>
+                    <form onsubmit="return validateRegister()">
+                        Name:<input type="text" id="username" placeholder="Username" required><br>
+                        Email:<input type="email" id="email" placeholder="Email" required><br>
+                        Phone:<input type="number" id="phone" placeholder="Phone Number" required><br>
+                        Gender:<input type="radio" name="gender" value="male"> Male
+                        <input type="radio" name="gender" value="female"> Female<br>
+                        Date of Birth:<input type="date" id="dob" placeholder="Date of Birth" required><br>
+                        Password:<input type="password" id="pwd" placeholder="Password" required><br>
+                        <button type="submit">Submit</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        function showform(formType) {
+            document.getElementById('loginRow').style.display = 'none';
+            document.getElementById('registerRow').style.display = 'none';
+            document.getElementById('formTable').style.display = 'table';
+            if (formType == 'login') {
+                document.getElementById('loginRow').style.display = 'table-row';
+            } else {
+                document.getElementById('registerRow').style.display = 'table-row';
+            }
+        }
+
+        function validateLogin() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (username === '' || password === '') {
+                alert("Please fill in all fields");
+                return false;
+            }
+            alert('Login successful');
+            return false;
+        }
+
+        function validateRegister() {
+            const name = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const dob = document.getElementById('dob').value;
+            const password = document.getElementById('pwd').value;
+            const phone = document.getElementById('phone').value;
+
+            if (name === '' || phone === '' || email === '' || dob === '' || password === '') {
+                alert("Please enter all fields");
+                return false;
+            }
+
+            const phonePattern = /^[0-9]{10}$/;
+            if (!phone.match(phonePattern)) {
+                alert('Please enter a valid 10-digit phone number');
+                return false;
+            }
+
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email.match(emailPattern)) {
+                alert('Please enter a valid email address');
+                return false;
+            }
+
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long');
+                return false;
+            }
+
+            alert('Registration Successful!');
+            return false;
+        }
+    </script>
+</body>
+
+</html>
